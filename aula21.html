@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <title>Aula 21 - VueJS </title>
+
+    <style>
+        .fade-enter-active, .fade-leave-active {
+            transition:  opacity .5s;
+        }
+        .fade-leave-active {
+            opacity: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <br><br><br>
+        <div class="container">
+            <h1> {{ titulo }} </h1>
+            <h3> Transições com animação CSS </h3>
+            <p> transition: o name é o nome da classe </p>
+            <p> exemplo: <i>< transition name="fade" >  </ transition> </i></p>
+                <p> .fade-enter-active, .fade-leave-active {
+                        transition:  opacity .5s;
+                    }</p>
+
+    <br><br>
+            
+            <select v-model="movie">
+                <option value="transformers"> Transformers</option>
+                <option value="game-of-thrones"> Game Of Thrones</option>
+            </select>
+
+                <br><br>
+                <!--  usando is não é necessário criar variável e verificar se é um ou outro, o is já diz qual component imprimir -->
+
+                <!-- <transformers v-if="movie == 'transformers'">
+                <h4 slot="title"> Transformers</h4>
+            </transformers>
+
+            <game-of-thrones v-if="movie == 'game-of-thrones'"></game-of-thrones> -->
+
+
+
+                <ul ref="users">
+                    <li v-for="(item, index) in users" :key="item.name"> {{ item.name }} <a href="#"
+                            @click.stop.prevent="remove(index)">
+                            x </a> </li>
+                </ul>
+
+                <transition name="fade">
+                    <component :is="movie">
+                            <h4 slot="title"> {{movie}}</h4>
+                    </component>
+                </transition>
+
+        </div>
+    </div>
+
+    <template id="transformers">
+        <div>
+            <slot name="title"></slot>
+            <ul>
+                <li v-for="item in transformers">{{ item.name }}</li>
+            </ul>
+        </div>
+    </template>
+
+    <template id="gameOfThrones">
+        <div>
+            <h4> Game Of Thrones</h4>
+
+            <ul>
+                <li v-for="item in gameofthrones"> {{item.name}} </li>
+            </ul>
+        </div>
+
+    </template>
+
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
+
+
+
+    <script>
+        Vue.component('transformers', {
+            template: "#transformers",
+            data() {
+                return {
+                    transformers: [
+                        { name: 'Optmus Prime' },
+                        { name: 'Bumble Bee' },
+                        { name: 'Megatron' }
+                    ]
+                }
+            }
+        }),
+
+            Vue.component('game-of-thrones', {
+                template: "#gameOfThrones",
+                data() {
+                    return {
+                        gameofthrones: [
+                            { name: 'John Snow' },
+                            { name: 'Daeerys Targaryen' },
+                            { name: 'Tyron' },
+                        ]
+                    }
+                }
+            });
+
+        var app = new Vue({
+            el: "#app", // elemento pai do meu aplicativo
+
+            mounted() {
+                console.log(this.$refs.users); // acessando todas as referencias do componente
+                // como tem apenas um ref="users" na tag ul ele diz que users é ul
+
+            },
+            data: { // Onde coloca as variáveis
+                titulo: "Aula 21 - VueJS",
+                users: [
+                    { name: 'Emma' },
+                    { name: 'Sophia' },
+                    { name: 'Isabella' },
+                ],
+                movie: 'transformers',
+
+
+            },
+
+            methods: {
+                remove(index) {
+                    this.users.splice(index, 1);
+                }
+            }
+
+
+        });
+
+
+    </script>
+</body>
+
+</html>

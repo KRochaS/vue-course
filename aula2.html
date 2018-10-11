@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Aula 2 - VueJS </title>
+</head>
+
+<body>
+    <div id="app">
+        <h1> Diretivas </h1>
+        <p> v-model, v-if, v-for, v-else, v-show</p>
+        <h4>
+            {{ titulo }}
+        </h4>
+
+        <button @click="abreMostra()"> clica aqui </button>
+        <p v-if="mostra"> mostra </p>
+    </div>
+    <script src="https://unpkg.com/vue"></script>
+
+
+    <script>
+
+        var app = new Vue({
+            el: "#app", // elemento pai do meu aplicativo
+            data: { // Onde coloca as variáveis
+                titulo: "Aula 1 - VueJS",
+                mostra: boolean = false
+            },
+            methods: {
+                abreMostra() {
+                    this.mostra = !this.mostra;
+                }
+            }
+        });
+
+
+    </script>
+</body>
+
+</html>

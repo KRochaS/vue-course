@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Aula 3 - VueJS </title>
+</head>
+
+<body>
+    <div id="app">
+        <h1> Diretivas </h1>
+        <p> v-show, v-if e v-else </p>
+        <h4 v-if="status">
+            {{ titulo }}
+        </h4>
+        <p v-else> Usando else </p>
+
+        <p v-show="show">
+            Usando v-show
+
+            
+        </p>
+
+        <p>
+            v-show - deixa o conteúdo no HTML porém coloca display None<br>
+            Mostrar e esconder um menu, de acordo com o click
+        </p>
+        <p>
+            v-if - tira o conteúdo da tela e do HTML
+            <br>
+            checar alguma variável que venha de uma API
+            <br>
+            e que o texto só vai ser impressa se a variável for verdadeira
+        </p>
+
+       
+
+        <div v-if="usuario.id == 1">
+            Id: {{usuario.id}} <br>
+            Nome: {{ usuario.nome}} <br>
+            Profissão: {{usuario.profissao}} <br>
+        </div>
+        <div v-else>
+            Nenhum usuário com o id == 1
+        </div>
+    </div>
+    <script src="https://unpkg.com/vue"></script>
+
+
+    <script>
+
+        var app = new Vue({
+            el: "#app", // elemento pai do meu aplicativo
+            data: { // Onde coloca as variáveis
+                show: false,
+                status: boolean = false,
+                titulo: "Aula 3 - VueJS",
+                usuario: {
+                    id: 2,
+                    nome: "John",
+                    profissao: "ator"
+                }
+
+            },
+        });
+
+
+    </script>
+</body>
+
+</html>

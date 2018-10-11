@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Aula 6 - VueJS </title>
+
+    <style>
+
+        .green {
+            color: green;
+        }
+    
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <h1> {{ titulo }} </h1>
+        <h2> Diretivas </h2>
+        <h5> v-bind </h5>
+        <p> Diretiva usada nos atributos das tags HTML </p>
+
+        <img :src="img" alt="">
+        <!--   <img v-bind:src="img" alt=""> -->
+
+        <p :class="classe"> Texto </p>
+
+       
+    </div>
+    <script src="https://unpkg.com/vue"></script>
+
+
+    <script>
+
+        var app = new Vue({
+            el: "#app", // elemento pai do meu aplicativo
+            data: { // Onde coloca as variáveis
+                titulo: "Aula 6 - VueJS",
+                img: 'http://br.web.img2.acsta.net/c_215_290/pictures/18/03/13/18/37/3567163.jpg',
+               classe: "green"
+            },
+        });
+
+
+    </script>
+</body>
+
+</html>

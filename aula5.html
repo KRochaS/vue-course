@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Aula 5 - VueJS </title>
+</head>
+
+<body>
+    <div id="app">
+        <h1> {{ titulo }} </h1>
+        <h2> Diretivas </h2>
+        <h5> v-model </h5>
+        <p> Diretiva usada em formulários </p>
+
+        <label> Nome: </label><br>
+        <input type="text" v-model="nome">
+        <br>
+        <label> Telefone:</label><br>
+        <input type="text" v-model="telefone">
+        <br>
+
+        <label>Deseja receber novidades ?</label><br>
+        <input  value="Sim" type="radio" v-model="novidades"> Sim
+        <input value="Não" type="radio" v-model="novidades"> Não
+        <br><br>
+
+        <label>Interesses</label> <br>
+        <input type="checkbox" v-model="interesses" value="Futebol"> Futebol <br>
+        <input type="checkbox" v-model="interesses" value="Formula 1"> Formula 1 <br>
+        <input type="checkbox" v-model="interesses" value="Corrida"> Corrida <br>
+
+        <br><br>
+
+        <label> Como nos conheceu?</label><br>
+        <select v-model="conheceu">
+            <option value="Google"> Google </option>    
+            <option value="TV"> TV </option>
+            <option value="Revista"> Revista </option>
+
+        </select>
+
+        <br><br>
+
+        <button> Enviar </button>
+
+
+        <hr>
+
+        Nome: {{ nome }}
+        <br>
+        Telefone: {{ telefone }}
+        <br>
+        Novidades: {{ novidades }}
+        <br>
+        Interesses: {{ interesses }},
+        <br>
+        Como nos conheceu: {{ conheceu }}
+
+    </div>
+    <script src="https://unpkg.com/vue"></script>
+
+
+    <script>
+
+        var app = new Vue({
+            el: "#app", // elemento pai do meu aplicativo
+            data: { // Onde coloca as variáveis
+                titulo: "Aula 5 - VueJS",
+                nome: '',
+                telefone: '',
+                novidades: '',
+                interesses: [],
+                conheceu: '',
+            
+            },
+        });
+
+
+    </script>
+</body>
+
+</html>

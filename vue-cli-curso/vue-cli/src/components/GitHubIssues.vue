@@ -5,8 +5,8 @@
             Página que lista issues de um repositório do Github, usando Vue.js.
         </p>
 
-        <div class="alert alert-danger">
-           
+        <div v-if="response.status == 'error'" class="alert alert-danger">
+           {{ response.message }}
         </div>
 
         <div class="row">
@@ -62,7 +62,7 @@
             
 
             </tr>
-                <tr v-if="issues.length > 0 && !loading" v-for="issue in issues" :key="issue.number">
+                <tr v-if="showIssues" v-for="issue in issues" :key="issue.number">
         
                     <td> 
                       
@@ -75,7 +75,7 @@
                 <td class="text-center" colspan="2"><img src="/static/loading.svg" alt=""></td>
             </tr> -->
 
-            <tr v-if="issues.length == 0 && !loading">
+            <tr v-if="noIssues">
                 <td class="text-center" colspan="2">Nenhuma issue encontrada!</td>
             </tr>
             </tbody>
@@ -94,8 +94,12 @@
 import axios from "axios";
 
 export default {
-    /* eslint-enable no-alert */
+  /* eslint-enable no-alert */
   name: "GitHubIssues",
+
+  created() {
+    this.getLocalData();
+  },
 
   data() {
     return {
@@ -105,68 +109,110 @@ export default {
       selectedIssue: {},
       loading: false,
       loadingIssue: false,
+      response: {
+          status: '',
+          message: '',
+      }
     };
   },
 
-  methods: {
-    reset() {
-      this.username = "";
-      this.repository = "";
-     
+  computed: {
+    // roda sempre que as variáveis internas se alterarem
+    // bom uso para de condição deixando o html mais limpo com a condição no computed
+
+    showIssues() {
+      return this.issues.length > 0 && !this.loading;
     },
+    noIssues() {
+      return this.issues.length == 0 && !this.loading;
+    },
+  },
 
-    async getIssues() {
-      console.log("Get Issues");
+    methods: {
+      reset() {
+        this.username = "";
+        this.repository = "";
+        localStorage.removeItem('gitHubIssues'); // Limpar LocalStorage
+      },
 
+      resetResponse() {
+          this.response.status = '';
+          this.response.message = '';
+      },
 
-      try {
-         this.loading = true;
-        if (this.username && this.repository) {
-          const url = `https://api.github.com/repos/${this.username}/${this.repository}/issues`;
-          let resp = await axios.get(url);
-          console.log("resp", resp.data);
-          setTimeout(() => {
-            this.issues = resp.data;
-         
-            this.loading = false;
+      async getIssues() {
+          this.resetResponse();
+           this.issues = [];
+        console.log("Get Issues");
 
-          }, 1000)
+        try {
+          this.loading = true;
+          if (this.username && this.repository) {
+            localStorage.setItem(
+              "gitHubIssues",
+              JSON.stringify({
+                username: this.username,
+                repository: this.repository
+              })
+            );
+            // set seta os valores do local storage - salvando no Local Storage chave  ,  valor;
+            const url = `https://api.github.com/repos/${this.username}/${this.repository}/issues`;
+            let resp = await axios.get(url);
+            console.log("resp", resp.data);
+            setTimeout(() => {
+              this.issues = resp.data;
+
+              this.loading = false;
+            }, 1000);
+          }
+        } catch (error) {
+          console.log("Erro ao buscar Issues", error);
+          this.loading = false;
+          this.response.status = 'error';
+          this.response.message = 'Repositório não existe';
+           this.issues = [];
         }
-      } catch (error) {
-        console.log("Erro ao buscar Issues", error);
-        this.loading = false;
+      },
+
+      getLocalData() {
+        const localData = JSON.parse(localStorage.getItem("gitHubIssues")); // recupera os dados do localstorage
+        console.log("local data", localData);
+        if (localData && localData.username && localData.repository) {
+          this.username = localData.username;
+          this.repository = localData.repository;
+          console.log("repository", this.repository);
+          this.getIssues();
+        }
       }
-    },
-
-
-    // async getIssue(issue) {
-
-    //     try {
-    //       this.loadingIssue = true;
-    //       if (this.username && this.repository) {
-    //           this.$set(issue, 'is_loading', true); // seta um novo valor dentro do objeto (adicionando o is_loading na issue)
-    //           const url = `https://api.github.com/repos/${this.username}/${this.repository}/issues/${issue.number}`;
-    //           let resp = await axios.get(url);
-    //           setTimeout(() => {
-           
-    //             this.selectedIssue = resp.data;
-         
-    //            this.$set(issue, 'is_loading', false);
-
-    //         }, 1000)
-    //       }
-    //     } catch (error) {
-    //         console.log('Erro ao buscar Issue', error);
-    //         this.$set(issue, 'is_loading', false);
-    //     }
-
-    // },
-
-    // voltar() {
-    //     this.selectedIssue = {};
-    // }
+    }
   }
-};
+
+// async getIssue(issue) {
+
+//     try {
+//       this.loadingIssue = true;
+//       if (this.username && this.repository) {
+//           this.$set(issue, 'is_loading', true); // seta um novo valor dentro do objeto (adicionando o is_loading na issue)
+//           const url = `https://api.github.com/repos/${this.username}/${this.repository}/issues/${issue.number}`;
+//           let resp = await axios.get(url);
+//           setTimeout(() => {
+
+//             this.selectedIssue = resp.data;
+
+//            this.$set(issue, 'is_loading', false);
+
+//         }, 1000)
+//       }
+//     } catch (error) {
+//         console.log('Erro ao buscar Issue', error);
+//         this.$set(issue, 'is_loading', false);
+//     }
+
+// },
+
+// voltar() {
+//     this.selectedIssue = {};
+// }
 </script>
 <style>
 img {

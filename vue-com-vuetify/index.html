@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+</head>
+
+<body>
+    <div id="app">
+        <navbar></navbar>
+        <v-app>
+            <v-content>
+                <v-container grid-list-xl>
+
+                    <v-layout>
+                        <v-flex>
+                            <v-card dark color="primary">
+                                <v-card-text>one</v-card-text>
+                            </v-card>
+                        </v-flex>
+                    </v-layout>
+                </v-container>
+            </v-content>
+        </v-app>
+    </div>
+
+
+    <template id="navbar">
+        <v-card height="200px" width="200px" flat>
+            <v-bottom-nav :active.sync="bottomNav" :value="true" absolute color="transparent">
+                <v-btn color="teal" flat value="recent">
+                    <span>Recent</span>
+                    <v-icon>history</v-icon>
+            </v-btn>
+            </v-bottom-nav>
+
+        </v-card>
+    </template>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
+    <script>
+        Vue.component('navbar', { // componente PAI
+            template: '#navbar',
+            data() { // Declarado a variavel topNav no component porque menu-nav está dentro de navbar
+                return { // obrigatóriamente para declarar variável em component o data tem que ser uma função que retorna 
+
+
+                }
+            },
+            methods: {
+
+            }
+        });
+        new Vue({
+            el: '#app'
+        })
+
+
+
+
+    </script>
+</body>
+
+</html>

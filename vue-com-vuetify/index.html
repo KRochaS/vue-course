@@ -17,7 +17,7 @@
                     <v-layout>
                         <v-flex>
                             <v-card dark color="primary">
-                                <v-card-text>one</v-card-text>
+                                <v-card-text class="one">one</v-card-text>
                             </v-card>
                         </v-flex>
                     </v-layout>
@@ -28,15 +28,25 @@
 
 
     <template id="navbar">
-        <v-card height="200px" width="200px" flat>
-            <v-bottom-nav :active.sync="bottomNav" :value="true" absolute color="transparent">
-                <v-btn color="teal" flat value="recent">
-                    <span>Recent</span>
-                    <v-icon>history</v-icon>
-            </v-btn>
-            </v-bottom-nav>
+        <v-toolbar dark>
+            <v-toolbar-side-icon class="hide-desktop"></v-toolbar-side-icon>
 
-        </v-card>
+            <v-toolbar-title class="white--text" :class="{'title-center': verificaPlatform == 'mobile'}">Title</v-toolbar-title>
+
+            <v-spacer></v-spacer>
+
+            <v-spacer></v-spacer>
+
+            <v-toolbar-items>
+                <v-btn flat class="hide-mobile">Link One</v-btn>
+                <v-btn flat class="hide-mobile">Link Two</v-btn>
+                <v-btn flat class="hide-mobile">Link Three</v-btn>
+            </v-toolbar-items>
+        </v-toolbar>
+
+
+
+
     </template>
 
 
@@ -47,22 +57,66 @@
             template: '#navbar',
             data() { // Declarado a variavel topNav no component porque menu-nav está dentro de navbar
                 return { // obrigatóriamente para declarar variável em component o data tem que ser uma função que retorna 
-
+                    verificaPlatform: 'desktop',
 
                 }
             },
+
             methods: {
 
             }
         });
+
+
         new Vue({
-            el: '#app'
+            el: '#app',
+           data: { // Onde coloca as variáveis
+              
+
+            },
+            created() {
+                this.verificaPlataforma();
+            },
+
+            methods: {
+                verificaPlataforma() {
+                    if (screen.width < 640 || screen.height < 480) {
+                        // sirva a versão pra celular
+                        console.log('versao celular');
+                        this.verificaPlatform = 'mobile';
+                    } else {
+                        console.log('versao pc');
+                          this.verificaPlatform = 'desktop';
+                    }
+
+                },
+            }
+
+
         })
 
 
 
 
     </script>
+
+    <style>
+        @media(min-width: 500px) {
+            .hide-desktop {
+                display: none;
+            }
+        }
+
+        @media(max-width: 500px) {
+            .hide-mobile {
+                display: none;
+            }
+        }
+
+        .title-center {
+           color: red;
+        }
+    </style>
 </body>
 
 </html>

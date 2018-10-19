@@ -31,7 +31,10 @@
         <v-toolbar dark>
             <v-toolbar-side-icon class="hide-desktop"></v-toolbar-side-icon>
 
-            <v-toolbar-title class="white--text" :class="{'title-center': verificaPlatform == 'mobile'}">Title</v-toolbar-title>
+            <v-toolbar-title :class="verificaPlatform == 'mobile' ? 'title-center' : ''">Title</v-toolbar-title>
+            <br>
+
+
 
             <v-spacer></v-spacer>
 
@@ -57,23 +60,11 @@
             template: '#navbar',
             data() { // Declarado a variavel topNav no component porque menu-nav está dentro de navbar
                 return { // obrigatóriamente para declarar variável em component o data tem que ser uma função que retorna 
-                    verificaPlatform: 'desktop',
+                    verificaPlatform: '',
 
                 }
             },
 
-            methods: {
-
-            }
-        });
-
-
-        new Vue({
-            el: '#app',
-           data: { // Onde coloca as variáveis
-              
-
-            },
             created() {
                 this.verificaPlataforma();
             },
@@ -86,10 +77,25 @@
                         this.verificaPlatform = 'mobile';
                     } else {
                         console.log('versao pc');
-                          this.verificaPlatform = 'desktop';
+                        this.verificaPlatform = 'desktop';
                     }
 
                 },
+
+            }
+        });
+
+
+        new Vue({
+            el: '#app',
+            data: { // Onde coloca as variáveis
+
+
+            },
+
+
+            methods: {
+
             }
 
 
@@ -100,21 +106,31 @@
 
     </script>
 
-    <style>
+    <style scoped>
         @media(min-width: 500px) {
             .hide-desktop {
                 display: none;
             }
+
+            
         }
 
         @media(max-width: 500px) {
             .hide-mobile {
                 display: none;
             }
-        }
 
-        .title-center {
-           color: red;
+            .title-center {
+                display: flex !important;
+                justify-content: center !important;
+                align-items: center !important;
+                margin-top: -44px;
+            }
+            .v-toolbar__content {
+                display: grid !important;
+            }
+
+
         }
     </style>
 </body>

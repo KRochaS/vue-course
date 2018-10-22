@@ -29,9 +29,9 @@
 
     <template id="navbar">
         <v-toolbar dark>
-            <v-toolbar-side-icon class="hide-desktop"></v-toolbar-side-icon>
+            <v-toolbar-side-icon @click.native.stop="sideNav = !sideNav" class="hidden-sm-and-up"></v-toolbar-side-icon>
 
-            <v-toolbar-title :class="verificaPlatform == 'mobile' ? 'title-center' : ''">Title</v-toolbar-title>
+            <v-toolbar-title>Title</v-toolbar-title>
             <br>
 
 
@@ -40,16 +40,13 @@
 
             <v-spacer></v-spacer>
 
-            <v-toolbar-items>
-                <v-btn flat class="hide-mobile">Link One</v-btn>
-                <v-btn flat class="hide-mobile">Link Two</v-btn>
-                <v-btn flat class="hide-mobile">Link Three</v-btn>
+            <v-toolbar-items class="hidden-xs-only">
+                <v-btn flat>Link One</v-btn>
+                <v-btn flat>Link Two</v-btn>
+                <v-btn flat>Link Three</v-btn>
             </v-toolbar-items>
         </v-toolbar>
-
-
-
-
+        
     </template>
 
 
@@ -58,30 +55,15 @@
     <script>
         Vue.component('navbar', { // componente PAI
             template: '#navbar',
-            data() { // Declarado a variavel topNav no component porque menu-nav está dentro de navbar
-                return { // obrigatóriamente para declarar variável em component o data tem que ser uma função que retorna 
-                    verificaPlatform: '',
+            data() { 
+                return {
+                    sideNav: false
 
                 }
             },
 
-            created() {
-                this.verificaPlataforma();
-            },
-
             methods: {
-                verificaPlataforma() {
-                    if (screen.width < 640 || screen.height < 480) {
-                        // sirva a versão pra celular
-                        console.log('versao celular');
-                        this.verificaPlatform = 'mobile';
-                    } else {
-                        console.log('versao pc');
-                        this.verificaPlatform = 'desktop';
-                    }
-
-                },
-
+              
             }
         });
 
@@ -107,31 +89,8 @@
     </script>
 
     <style scoped>
-        @media(min-width: 500px) {
-            .hide-desktop {
-                display: none;
-            }
-
-            
-        }
-
-        @media(max-width: 500px) {
-            .hide-mobile {
-                display: none;
-            }
-
-            .title-center {
-                display: flex !important;
-                justify-content: center !important;
-                align-items: center !important;
-                margin-top: -44px;
-            }
-            .v-toolbar__content {
-                display: grid !important;
-            }
-
-
-        }
+    
+        
     </style>
 </body>
 

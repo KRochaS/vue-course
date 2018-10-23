@@ -6,6 +6,9 @@
     <link href="https://fonts.googleapis.com/css?family=Material+Icons" rel="stylesheet">
     <link href="https://cdn.materialdesignicons.com/2.5.94/css/materialdesignicons.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.19/css/uikit.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.19/js/uikit.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.19/js/uikit-icons.min.js"></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
 </head>
@@ -21,10 +24,10 @@
         <v-app>
 
 
-            <v-toolbar dark>
-                <v-toolbar-side-icon @click.stop="sideNav = !sideNav" class="hidden-sm-and-up"></v-toolbar-side-icon>
+            <v-toolbar color="teal">
+                <v-toolbar-side-icon @click.stop="sideNav = !sideNav" class="hidden-sm-and-ups white--text" class=""></v-toolbar-side-icon>
 
-                <v-toolbar-title>
+                <v-toolbar-title class="white--text">
                     <router-link to="/home">
                         Title
                     </router-link>
@@ -38,7 +41,7 @@
 
 
                 <v-toolbar-items class="hidden-xs-only">
-                    <v-btn flat v-for="(item, index) in itemsMenu" :key="index">
+                    <v-btn flat v-for="item in itemsMenu" :key="item.titulo" router :to="item.link" color="white">
                         <v-icon left>{{item.icon}} </v-icon> {{item.titulo}}
                     </v-btn>
 
@@ -47,12 +50,14 @@
 
             <v-navigation-drawer temporary v-model="sideNav" v-if="sideNav">
                 <v-list>
-                    <v-list-tile v-for="item in itemsMenu" :key="item.titulo">
+                    <v-list-tile white v-for="item in itemsMenu" :key="item.titulo" router :to="item.link">
                         <v-list-tile-action>
                             <v-icon> {{item.icon}} </v-icon>
                         </v-list-tile-action>
                         <v-list-tile-content>
+
                             {{item.titulo}}
+
                         </v-list-tile-content>
 
                     </v-list-tile>
@@ -70,7 +75,52 @@
 
     <template id="home">
         <div>
-            <h1> home </h1>
+
+            <!-- <v-parallax dark src="https://cdn.pixabay.com/photo/2016/03/28/19/50/easter-bunny-1286796_1280.jpg">
+                <v-layout align-center column justify-center>
+                    <h1 class="display-2 font-weight-thin mb-3"> Titulo </h1>
+                    <h4 class="subheading">Aqui um texto</h4>
+                </v-layout>
+            </v-parallax> -->
+            <!-- <v-flex>
+                <v-card>
+                    <v-img src="https://cdn.vuetifyjs.com/images/cards/desert.jpg" aspect-ratio="2.75"></v-img>
+                </v-card>
+            </v-flex>
+            </v-layout> -->
+
+            <br><br>
+
+    <v-container grid-list-xl>
+        <v-layout row wrap>
+            <v-flex >
+                <v-card dark color="primary">
+                    <v-card color="teal" dark>
+                        <v-card-title primary class="title" justify-center align-center>Lorem</v-card-title>
+                
+                    <v-card-text>Lorem
+                    Lorem ipsum dolor sit amet, mel at clita quando. Te sit oratio vituperatoribus, nam ad ipsum posidonium mediocritatem,
+                    explicari dissentiunt cu mea. Repudiare disputationi vim in, mollis iriure nec cu, alienum argumentum ius ad. Pri eu
+                    justo aeque torquatos.</v-card-text>
+                </v-card>
+            </v-flex>
+            </v-layout></v-container>
+          
+        </div>
+
+
+
+    </template>
+
+    <template id="trabalhos">
+        <div>
+            <h1>Trabalhos</h1>
+        </div>
+    </template>
+
+    <template id="catalago">
+        <div>
+            <h1> Catalágos</h1>
         </div>
     </template>
 
@@ -87,9 +137,9 @@
                 return {
                     sideNav: false,
                     itemsMenu: [
-                        { icon: 'home', titulo: 'Home' },
-                        { icon: 'mdi mdi-panda', titulo: 'Trabalhos' },
-                        { icon: 'mdi mdi-book-open-page-variant', titulo: 'Catálogo' }
+                        { icon: 'home', titulo: 'Home', link: '/home' },
+                        { icon: 'mdi mdi-panda', titulo: 'Trabalhos', link: '/trabalhos' },
+                        { icon: 'mdi mdi-book-open-page-variant', titulo: 'Catálogo', link: '/catalago' }
                     ]
 
                 }
@@ -104,9 +154,19 @@
             template: '#home',
         })
 
+        var trabalhos = Vue.component('trabalhos', {
+            template: '#trabalhos',
+        })
+
+        var catalago = Vue.component('catalago', {
+            template: '#catalago',
+        })
+
         var router = new VueRouter({
             routes: [
-                { path: '/home', component: home },
+                { path: '/home', component: home, name: 'home' },
+                { path: '/trabalhos', component: trabalhos },
+                { path: '/catalago', component: catalago }
 
             ]
         });
@@ -126,6 +186,13 @@
 
             },
 
+            created () {
+             this.$router.push({ name: 'home' })
+
+             console.log(this.router);
+                
+            }
+
 
         });
 
@@ -133,8 +200,44 @@
     </script>
 
     <style scoped>
+        a {
+            color: #000;
+        }
+
+        a:link {
+            text-decoration: none;
+
+        }
+
+        .v-parallax__content {
+
+            background: rgba(0, 0, 0, .62) !important;
+            height: 500px;
 
 
+        }
+
+        /* .v-toolbar .theme--light {
+            background-color: #0097a7;
+        } */
+
+        /* .primary--text {
+            color: #0097a7 !important;
+            caret-color: #0097a7 !important;
+        } */
+
+       
+
+        .v-icon v-icon--left material-icons theme--light{
+            background-color: #1ea3b1;
+        }
+
+        .router-link-exact-active.router-link-active {
+            color: white !important;
+        }
+
+
+       
     </style>
 </body>
 

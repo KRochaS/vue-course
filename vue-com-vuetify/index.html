@@ -91,21 +91,33 @@
 
             <br><br>
 
-    <v-container grid-list-xl>
-        <v-layout row wrap>
-            <v-flex >
-                <v-card dark color="primary">
-                    <v-card color="teal" dark>
-                        <v-card-title primary class="title" justify-center align-center>Lorem</v-card-title>
-                
-                    <v-card-text>Lorem
-                    Lorem ipsum dolor sit amet, mel at clita quando. Te sit oratio vituperatoribus, nam ad ipsum posidonium mediocritatem,
-                    explicari dissentiunt cu mea. Repudiare disputationi vim in, mollis iriure nec cu, alienum argumentum ius ad. Pri eu
-                    justo aeque torquatos.</v-card-text>
-                </v-card>
-            </v-flex>
-            </v-layout></v-container>
-          
+            <v-container grid-list-md>
+                <v-layout row wrap>
+                    <v-flex sm6 text-wrap class="title">
+                        <h1>Lore Ipsum's </h1>
+                    </v-flex>
+                </v-layout>
+                <v-layout row wrap>
+                    <v-flex xs12 sm6 md4 lg4 justify-center align-items-center> 
+                        <v-card height="350" color="teal" dark justify-center align-center>
+                            <v-card-text d-flex justify-center align-center> <p>  img </p></v-card-text>
+                        </v-card>
+                    </v-flex>
+              
+                    <v-flex style="padding:16px;" xs12 sm5 md8 lg8 class="sobre">
+                        <h2> Sobre </h2>
+                        <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer id dapibus purus.
+                            Curabitur sit amet libero et
+                            tellus
+                            mollis placerat non ut nisi. Maecenas felis enim, condimentum eu dignissim nec,
+                            tristique sit amet lectus. Nam
+                            sed</p>
+                    </v-flex>
+                </v-layout>
+
+
+            </v-container>
+
         </div>
 
 
@@ -186,11 +198,11 @@
 
             },
 
-            created () {
-             this.$router.push({ name: 'home' })
+            created() {
+                this.$router.push({ name: 'home' })
 
-             console.log(this.router);
-                
+                console.log(this.router);
+
             }
 
 
@@ -226,9 +238,9 @@
             caret-color: #0097a7 !important;
         } */
 
-       
 
-        .v-icon v-icon--left material-icons theme--light{
+
+        .v-icon v-icon--left material-icons theme--light {
             background-color: #1ea3b1;
         }
 
@@ -236,8 +248,39 @@
             color: white !important;
         }
 
+        .title h1 {
+            font-family: Roboto, sans-serif;
+            font-size: 4rem;
+            line-height: 1;
+            font-weight: 400;
+            margin-bottom: 1rem;
 
-       
+        }
+
+        @media (max-width: 780px) {
+            .title h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+        .sobre h2 {
+
+            font-family: Roboto, monospace;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            margin-bottom: 1rem;
+            color: #000;
+        }
+
+        .sobre::before {
+            content: '';
+            display: inline-block;
+            width: 40px;
+            height: 10px;
+            margin-right: 10px;
+            background: #00675b;
+        }
     </style>
 </body>
 

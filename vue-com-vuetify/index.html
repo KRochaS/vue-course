@@ -98,12 +98,14 @@
                     </v-flex>
                 </v-layout>
                 <v-layout row wrap>
-                    <v-flex xs12 sm6 md4 lg4 justify-center align-items-center> 
+                    <v-flex xs12 sm6 md4 lg4 justify-center align-items-center>
                         <v-card height="350" color="teal" dark justify-center align-center>
-                            <v-card-text d-flex justify-center align-center> <p>  img </p></v-card-text>
+                            <v-card-text d-flex justify-center align-center>
+                                <p> img </p>
+                            </v-card-text>
                         </v-card>
                     </v-flex>
-              
+
                     <v-flex style="padding:16px;" xs12 sm5 md8 lg8 class="sobre">
                         <h2> Sobre </h2>
                         <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer id dapibus purus.
@@ -112,7 +114,17 @@
                             mollis placerat non ut nisi. Maecenas felis enim, condimentum eu dignissim nec,
                             tristique sit amet lectus. Nam
                             sed</p>
+
+
+                        <div class="flex-fim">
+                            <div class="teste">
+                                <h2>teste</h2>
+                            </div>
+
+                        </div>
                     </v-flex>
+
+
                 </v-layout>
 
 
@@ -280,6 +292,19 @@
             height: 10px;
             margin-right: 10px;
             background: #00675b;
+        }
+
+
+        .teste {
+            background-color: red !important;
+        }
+
+        div.flex-fim {
+            display: flex;
+            align-self: flex-end;
+            /* flex-direction: column; */
+            align-items: flex-end;
+            height: 50%;
         }
     </style>
 </body>

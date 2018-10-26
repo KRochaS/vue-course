@@ -98,7 +98,7 @@
                     </v-flex>
                 </v-layout>
                 <v-layout row wrap>
-                    <v-flex xs12 sm6 md4 lg4 justify-center align-items-center>
+                    <v-flex xs8 sm6 md4 lg4 justify-center align-items-center>
                         <v-card height="350" color="teal" dark justify-center align-center>
                             <v-card-text d-flex justify-center align-center>
                                 <p> img </p>
@@ -118,7 +118,8 @@
 
                         <div class="flex-fim">
                             <div class="teste">
-                                <h2>teste</h2>
+                                <v-icon> mdi mdi-whatsapp mdi-24px </v-icon>
+                                <v-icon> mdi mdi-email mdi-24px</v-icon>
                             </div>
 
                         </div>
@@ -162,7 +163,7 @@
                     sideNav: false,
                     itemsMenu: [
                         { icon: 'home', titulo: 'Home', link: '/home' },
-                        { icon: 'mdi mdi-panda', titulo: 'Trabalhos', link: '/trabalhos' },
+                        { icon: 'mdi mdi-panda mdi', titulo: 'Trabalhos', link: '/trabalhos' },
                         { icon: 'mdi mdi-book-open-page-variant', titulo: 'Catálogo', link: '/catalago' }
                     ]
 
@@ -294,17 +295,9 @@
             background: #00675b;
         }
 
-
-        .teste {
-            background-color: red !important;
-        }
-
-        div.flex-fim {
-            display: flex;
-            align-self: flex-end;
-            /* flex-direction: column; */
-            align-items: flex-end;
-            height: 50%;
+        .teste .theme--light.v-icon {
+            color: rgb(0, 103, 91);
+            padding-right: 10px;
         }
     </style>
 </body>

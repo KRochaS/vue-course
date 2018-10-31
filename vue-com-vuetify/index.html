@@ -41,7 +41,7 @@
 
 
                 <v-toolbar-items class="hidden-xs-only">
-                    <v-btn flat v-for="item in itemsMenu" :key="item.titulo" router :to="item.link" color="white">
+                    <v-btn flat v-for="item in itemsMenu" :key="item.titulo" router :to="item.link" color="white" @click.prevent.stop="detalhes = false">
                         <v-icon left>{{item.icon}} </v-icon> {{item.titulo}}
                     </v-btn>
 
@@ -122,37 +122,12 @@
     </template>
 
     <template id="trabalhos">
-        <!-- <v-container v-if="detalhes"> -->
-        <!-- <v-layout row wrap>
-                <v-flex sm6 text-wrap class="title">
-                    <h2>Lore Ipsum's </h2>
-                </v-flex>
-            </v-layout>
+        <div v-if="detalhes" class="col">
+            <!--  conteúdo do detalhes -->
+            <router-view></router-view>
 
-            <v-layout row wrap>
-                <v-flex xs12 sm6 md6 lg8 justify-center align-items-center>
-                    <v-carousel hide-delimiters>
-                        <v-carousel-item v-for="(item, i) in itemsImgs" :key="i" :src="item.src"></v-carousel-item>
-                    </v-carousel>
-                </v-flex>
-
-                <v-flex style="padding:16px;" xs8 sm5 md6 lg4 class="sobre">
-                    <h2> Sobre </h2>
-                    <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer id dapibus purus.
-                        Curabitur sit amet libero et
-                        tellus
-                        mollis placerat non ut nisi. Maecenas felis enim, condimentum eu dignissim nec,
-                        tristique sit amet lectus. Nam
-                        sed</p>
-                </v-flex>
-            </v-layout> -->
-
-
-        <!-- </v-container>
-
-        <v-layout v-else="!detalhes"> -->
-
-        <v-container>
+        </div>
+        <v-container v-else="!detalhes">
             <v-layout row wrap>
                 <v-flex sm6 text-wrap class="title">
                     <h2>Lore Ipsum's </h2>
@@ -160,14 +135,95 @@
             </v-layout>
 
             <v-layout row wrap>
-                <v-flex xs6 sm4 md4 lg2 xl4 justify-center align-items-center v-for="(img, i) in itemsImgs" :key="i"  @click.prevent.stop="abrirDetalhes(i)">
-                    <img class="espaco" :src="img.src" alt="">
+                <v-flex lg8>
+                    <v-container fluid class="conteudo">
+                        <v-layout row wrap>
+
+                            <v-flex v-for="(img, i) in itemsImgs" :key="i" xs4 @click.prevent.stop="abrirDetalhes(i)">
+                                <router-link :to="{name: '/trabalhosDetalhes', params: {name: img.id}}">
+                                    <v-card flat tile>
+                                        <v-img class="espaco" :src="img.src" height="150px"></v-img>
+                                    </v-card>
+                                </router-link>
+                            </v-flex>
+
+
+                        </v-layout>
+
+
+                    </v-container>
                 </v-flex>
 
+
+
+                <v-flex lg4 class="sobre" style="padding:16px;">
+                    <v-container fluid class="conteudo">
+                        <v-layout row wrap>
+                            <h2> Trabalhos </h2>
+                            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer id dapibus purus.
+                                Curabitur sit amet libero et
+                                tellus
+                                mollis placerat non ut nisi. Maecenas felis enim, condimentum eu dignissim nec,
+                                tristique sit amet lectus. Nam
+                                sed</p>
+                        </v-layout>
+                    </v-container>
+                </v-flex>
+            </v-layout>
         </v-container>
 
 
+
     </template>
+
+    <template id="trabalhosDetalhes">
+
+
+        <v-layout row wrap v-if="$route.params.name == '1'">
+            <v-flex xs12 sm6 md6 lg8 justify-center align-items-center>
+                <v-carousel hide-delimiters>
+                    <v-carousel-item v-for="(item, i) in itemsImgs" :key="i" :src="item.src"></v-carousel-item>
+                </v-carousel>
+            </v-flex>
+
+            <v-flex style="padding:16px;" xs8 sm5 md6 lg4 class="sobre">
+                <h2> Sobre </h2>
+                <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer id dapibus purus.
+                    Curabitur sit amet libero et
+                    tellus
+                    mollis placerat non ut nisi. Maecenas felis enim, condimentum eu dignissim nec,
+                    tristique sit amet lectus. Nam
+                    sed</p>
+            </v-flex>
+        </v-layout>
+
+
+        <v-layout row wrap v-else-if="$route.params.name == '2'">
+            <v-flex xs12 sm6 md6 lg6 justify-center align-items-center>
+                <v-carousel hide-delimiters>
+                    <v-carousel-item v-for="(item, i) in itemsImgs2" :key="i" :src="item.src"></v-carousel-item>
+                </v-carousel>
+            </v-flex>
+
+            <v-flex style="padding:16px;" xs8 sm5 md6 lg4 class="sobre">
+                <h2> Sobre </h2>
+                <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer id dapibus purus.
+                    Curabitur sit amet libero et
+                    tellus
+                    mollis placerat non ut nisi. Maecenas felis enim, condimentum eu dignissim nec,
+                    tristique sit amet lectus. Nam
+                    sed</p>
+            </v-flex>
+        </v-layout>
+
+
+        <div v-else="$route.params.name == '3'">
+            OOOOI
+        </div>
+
+
+    </template>
+
     <template id="catalago">
         <div>
             <h1> Catalágos</h1>
@@ -185,6 +241,7 @@
             template: '#navbar',
             data() {
                 return {
+                    detalhes: false,
                     sideNav: false,
                     itemsMenu: [
                         { icon: 'home', titulo: 'Home', link: '/home' },
@@ -210,18 +267,41 @@
 
                 return {
                     itemsImgs: [
+                        { src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEdT8TMoHjVohRBnciHmN3uP22zbnCCYLSfj0nf8vEkNzj9qPk', id: '1' },
+                        { src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEdT8TMoHjVohRBnciHmN3uP22zbnCCYLSfj0nf8vEkNzj9qPk', id: '2' },
+                        { src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEdT8TMoHjVohRBnciHmN3uP22zbnCCYLSfj0nf8vEkNzj9qPk', id: '3' },
+                        { src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEdT8TMoHjVohRBnciHmN3uP22zbnCCYLSfj0nf8vEkNzj9qPk', id: '4' },
+
+
+                    ]
+                }
+            },
+            methods: {
+             
+    
+                
+            }
+        })
+
+
+
+        var trabalhosDetalhes = Vue.component('trabalhosDetalhes', {
+            template: '#trabalhosDetalhes',
+            data() {
+
+                return {
+                    itemsImgs: [
                         { src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEdT8TMoHjVohRBnciHmN3uP22zbnCCYLSfj0nf8vEkNzj9qPk' },
                         { src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEdT8TMoHjVohRBnciHmN3uP22zbnCCYLSfj0nf8vEkNzj9qPk' },
                         { src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEdT8TMoHjVohRBnciHmN3uP22zbnCCYLSfj0nf8vEkNzj9qPk' },
                         { src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEdT8TMoHjVohRBnciHmN3uP22zbnCCYLSfj0nf8vEkNzj9qPk' },
-                        { src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEdT8TMoHjVohRBnciHmN3uP22zbnCCYLSfj0nf8vEkNzj9qPk' },
-                        { src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEdT8TMoHjVohRBnciHmN3uP22zbnCCYLSfj0nf8vEkNzj9qPk' },
-                        { src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEdT8TMoHjVohRBnciHmN3uP22zbnCCYLSfj0nf8vEkNzj9qPk' },
-                        { src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEdT8TMoHjVohRBnciHmN3uP22zbnCCYLSfj0nf8vEkNzj9qPk' },
-                        { src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEdT8TMoHjVohRBnciHmN3uP22zbnCCYLSfj0nf8vEkNzj9qPk' },
-                        { src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEdT8TMoHjVohRBnciHmN3uP22zbnCCYLSfj0nf8vEkNzj9qPk' },
-                        { src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEdT8TMoHjVohRBnciHmN3uP22zbnCCYLSfj0nf8vEkNzj9qPk' },
-                        { src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEdT8TMoHjVohRBnciHmN3uP22zbnCCYLSfj0nf8vEkNzj9qPk' }
+
+
+                    ],
+                    itemsImgs2: [
+                        { src: 'https://cdn.vuetifyjs.com/images/cards/docks.jpg' },
+                        { src: 'https://cdn.vuetifyjs.com/images/cards/docks.jpg' },
+                        { src: 'https://cdn.vuetifyjs.com/images/cards/docks.jpg' }
                     ]
                 }
             },
@@ -229,9 +309,7 @@
                 mostraDetalhes() {
                     this.detalhes = !this.detalhes;
                 },
-                abrirDetalhes(index) {
-                    console.log('passou o mouse index', index);
-                }
+               
             }
         })
 
@@ -242,8 +320,14 @@
         var router = new VueRouter({
             routes: [
                 { path: '/home', component: home, name: 'home' },
-                { path: '/trabalhos', component: trabalhos },
-                { path: '/catalago', component: catalago }
+                {
+                    path: '/trabalhos', component: trabalhos,
+                    children: [
+                        { path: ':name', name: '/trabalhosDetalhes', component: trabalhosDetalhes }
+                    ]
+                },
+
+                { path: '/catalago', component: catalago },
 
             ]
         });
@@ -253,14 +337,22 @@
 
         var app = new Vue({
             el: "#app", // elemento pai do meu aplicativo
+            
 
             router,
 
 
             data: { // Onde coloca as variáveis
+                detalhes: false,
 
 
 
+            },
+            methods: {
+                 abrirDetalhes(index) {
+                    console.log('passou o mouse index', index);
+                    this.detalhes = true;
+                }
             },
 
             created() {
@@ -345,10 +437,18 @@
         }
 
         .espaco {
-            padding-right: 16px;
-            padding-top: 16px;
-            opacity: .8;
+            margin-left: 10px;
+            margin-top: 10px;
 
+        }
+
+        .conteudo {
+            padding: 0px !important;
+        }
+
+        .v-responsive__content {
+
+            cursor: pointer !important;
         }
     </style>
 </body>

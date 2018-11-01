@@ -41,7 +41,7 @@
 
 
                 <v-toolbar-items class="hidden-xs-only">
-                    <v-btn flat v-for="item in itemsMenu" :key="item.titulo" router :to="item.link" color="white" @click.prevent.stop="detalhes = false">
+                    <v-btn flat v-for="item in itemsMenu" :key="item.titulo" router :to="item.link" color="white">
                         <v-icon left>{{item.icon}} </v-icon> {{item.titulo}}
                     </v-btn>
 
@@ -122,12 +122,8 @@
     </template>
 
     <template id="trabalhos">
-        <div v-if="detalhes" class="col">
-            <!--  conteúdo do detalhes -->
-            <router-view></router-view>
 
-        </div>
-        <v-container v-else="!detalhes">
+        <v-container>
             <v-layout row wrap>
                 <v-flex sm6 text-wrap class="title">
                     <h2>Lore Ipsum's </h2>
@@ -139,7 +135,7 @@
                     <v-container fluid class="conteudo">
                         <v-layout row wrap>
 
-                            <v-flex v-for="(img, i) in itemsImgs" :key="i" xs4 @click.prevent.stop="abrirDetalhes(i)">
+                            <v-flex v-for="(img, i) in itemsImgs" :key="i" xs4 @click.prevent.stop="abrirDetalhes()">
                                 <router-link :to="{name: '/trabalhosDetalhes', params: {name: img.id}}">
                                     <v-card flat tile>
                                         <v-img class="espaco" :src="img.src" height="150px"></v-img>
@@ -170,16 +166,24 @@
                     </v-container>
                 </v-flex>
             </v-layout>
+
+            <div>
+                <!--  conteúdo do detalhes -->
+                <router-view></router-view>
+
+            </div>
         </v-container>
 
 
 
     </template>
 
+
     <template id="trabalhosDetalhes">
 
+    
 
-        <v-layout row wrap v-if="$route.params.name == '1'">
+        <v-layout class="top" row wrap v-if="$route.params.name == '1'">
             <v-flex xs12 sm6 md6 lg8 justify-center align-items-center>
                 <v-carousel hide-delimiters>
                     <v-carousel-item v-for="(item, i) in itemsImgs" :key="i" :src="item.src"></v-carousel-item>
@@ -187,18 +191,16 @@
             </v-flex>
 
             <v-flex style="padding:16px;" xs8 sm5 md6 lg4 class="sobre">
-                <h2> Sobre </h2>
+                <h2> Detalhes </h2>
                 <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer id dapibus purus.
                     Curabitur sit amet libero et
                     tellus
-                    mollis placerat non ut nisi. Maecenas felis enim, condimentum eu dignissim nec,
-                    tristique sit amet lectus. Nam
-                    sed</p>
+                </p>
             </v-flex>
         </v-layout>
 
 
-        <v-layout row wrap v-else-if="$route.params.name == '2'">
+        <v-layout class="top" row wrap v-else-if="$route.params.name == '2'">
             <v-flex xs12 sm6 md6 lg6 justify-center align-items-center>
                 <v-carousel hide-delimiters>
                     <v-carousel-item v-for="(item, i) in itemsImgs2" :key="i" :src="item.src"></v-carousel-item>
@@ -206,18 +208,16 @@
             </v-flex>
 
             <v-flex style="padding:16px;" xs8 sm5 md6 lg4 class="sobre">
-                <h2> Sobre </h2>
+                <h2> Detalhes </h2>
                 <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer id dapibus purus.
                     Curabitur sit amet libero et
                     tellus
-                    mollis placerat non ut nisi. Maecenas felis enim, condimentum eu dignissim nec,
-                    tristique sit amet lectus. Nam
-                    sed</p>
+                    </p>
             </v-flex>
         </v-layout>
 
 
-        <div v-else="$route.params.name == '3'">
+        <div class="top" v-else="$route.params.name == '3'">
             OOOOI
         </div>
 
@@ -239,9 +239,17 @@
 
         Vue.component('navbar', { // componente PAI
             template: '#navbar',
+            created() {
+                // eventBus.$on('abrirDetalhes', (detalhes) => {
+                //     detalhes = false;
+                //     console.log('this.detalhes component NAVBAR', detalhes);
+
+                //     this.escondeDetalhes();
+                // })
+            },
             data() {
                 return {
-                    detalhes: false,
+
                     sideNav: false,
                     itemsMenu: [
                         { icon: 'home', titulo: 'Home', link: '/home' },
@@ -253,7 +261,13 @@
             },
 
             methods: {
+                // escondeDetalhes(detalhes) {
+                //     this.detalhes = false;
+                //     console.log('detalhes', this.detalhes);
+                //     eventBus.$emit('esconderDetalhes', this.detalhes);
 
+                //     console.log('this.detalhes component NAV', this.detalhes);
+                // }
             }
         });
 
@@ -263,23 +277,41 @@
 
         var trabalhos = Vue.component('trabalhos', {
             template: '#trabalhos',
+            updated() {
+                // eventBus.$on('esconderDetalhes', (detalhes) => {
+                //     // detalhes = false;
+                //     console.log('this.detalhes component TRAB', detalhes);
+                //     this.detalhes = detalhes;
+
+                // })
+            },
             data() {
 
                 return {
+                    detalhes: false,
                     itemsImgs: [
                         { src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEdT8TMoHjVohRBnciHmN3uP22zbnCCYLSfj0nf8vEkNzj9qPk', id: '1' },
                         { src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEdT8TMoHjVohRBnciHmN3uP22zbnCCYLSfj0nf8vEkNzj9qPk', id: '2' },
                         { src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEdT8TMoHjVohRBnciHmN3uP22zbnCCYLSfj0nf8vEkNzj9qPk', id: '3' },
                         { src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEdT8TMoHjVohRBnciHmN3uP22zbnCCYLSfj0nf8vEkNzj9qPk', id: '4' },
+                        { src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEdT8TMoHjVohRBnciHmN3uP22zbnCCYLSfj0nf8vEkNzj9qPk', id: '5' },
+                        { src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEdT8TMoHjVohRBnciHmN3uP22zbnCCYLSfj0nf8vEkNzj9qPk', id: '6' },
 
 
                     ]
                 }
             },
             methods: {
-             
-    
-                
+                // abrirDetalhes() {
+                //     this.detalhes = true;
+
+                //     eventBus.$emit('abrirDetalhes', this.detalhes);
+
+                //     console.log('this.detalhes component TRABALHOS', this.detalhes);
+                // }
+
+
+
             }
         })
 
@@ -302,14 +334,12 @@
                         { src: 'https://cdn.vuetifyjs.com/images/cards/docks.jpg' },
                         { src: 'https://cdn.vuetifyjs.com/images/cards/docks.jpg' },
                         { src: 'https://cdn.vuetifyjs.com/images/cards/docks.jpg' }
-                    ]
+                    ],
+
                 }
             },
             methods: {
-                mostraDetalhes() {
-                    this.detalhes = !this.detalhes;
-                },
-               
+
             }
         })
 
@@ -333,26 +363,24 @@
         });
 
 
+        // var eventBus = new Vue();
 
 
         var app = new Vue({
             el: "#app", // elemento pai do meu aplicativo
-            
+
 
             router,
 
 
             data: { // Onde coloca as variáveis
-                detalhes: false,
+
 
 
 
             },
             methods: {
-                 abrirDetalhes(index) {
-                    console.log('passou o mouse index', index);
-                    this.detalhes = true;
-                }
+
             },
 
             created() {
@@ -440,6 +468,9 @@
             margin-left: 10px;
             margin-top: 10px;
 
+        }
+        .top {
+            margin-top: 20px;
         }
 
         .conteudo {
